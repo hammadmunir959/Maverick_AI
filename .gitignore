@@ -1,0 +1,26 @@
+# git ignore file for Maverick project
+# Ignore build artifacts
+# Ignore node modules
+/build/
+/node_modules/
+# Ignore logs
+/logs/
+*.log
+
+# Ignore environment files
+/.env
+# Ignore IDE specific files
+/.vscode/
+/__pycache__/
+# Ignore OS specific files
+.DS_Store
+
+# Ignore Python specific files
+*.pyc
+# Ignore Python virtual environment
+venv/
+# Ignore Python cache files
+__pycache__/
+# Ignore Python egg files
+*.egg
+

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curious Fellow - Ask me anything</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+    <script src="https://unpkg.com/lucide@0.299.0/dist/umd/lucide.min.js"></script>
+    
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="background-gradient"></div>
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+    </div>
+
+    <div class="app">
+        <!-- Sidebar (Closed by default) -->
+        <aside class="sidebar collapsed" id="sidebar">
+            <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+            <div class="sidebar-panel">
+                <div class="sidebar-header">
+                    <div class="sidebar-brand">
+                        <div class="brand-icon">
+                            <i data-lucide="brain-circuit"></i>
+                        </div>
+                        <div class="brand-text">
+                            <h2 class="sidebar-title">Conversations</h2>
+                            <p class="sidebar-subtitle">Your AI chat history</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-ghost btn-icon sidebar-close" id="sidebarClose">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                
+                <div class="sidebar-content">
+                    <div class="search-sessions">
+                        <div class="search-input-wrapper">
+                            <i data-lucide="search"></i>
+                            <input type="text" placeholder="Search conversations..." class="search-input" id="searchSessions">
+                        </div>
+                    </div>
+                    
+                    <div class="session-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="today">Today</button>
+                        <button class="filter-btn" data-filter="week">This Week</button>
+                        <button class="filter-btn" data-filter="month">This Month</button>
+                    </div>
+                    
+                    <ul class="session-list" id="sessionList">
+                        <!-- Sample sessions for demo -->
+                        <li class="session-item active">
+                            <div class="session-item-content">
+                                <div class="session-title">AI Development Discussion</div>
+                                <div class="session-preview">What are the latest trends in artificial intelligence...</div>
+                                <div class="session-meta">
+                                    <span class="session-time">2 hours ago</span>
+                                    <span class="session-messages">12 messages</span>
+                                </div>
+                            </div>
+                            <button class="delete-session" title="Delete conversation">
+                                <i data-lucide="trash-2"></i>
+                            </button>
+                        </li>
+                        <li class="session-item">
+                            <div class="session-item-content">
+                                <div class="session-title">Weather Inquiry</div>
+                                <div class="session-preview">What's the weather like in Islamabad today?</div>
+                                <div class="session-meta">
+                                    <span class="session-time">Yesterday</span>
+                                    <span class="session-messages">3 messages</span>
+                                </div>
+                            </div>
+                            <button class="delete-session" title="Delete conversation">
+                                <i data-lucide="trash-2"></i>
+                            </button>
+                        </li>
+                        <li class="session-item">
+                            <div class="session-item-content">
+                                <div class="session-title">Programming Help</div>
+                                <div class="session-preview">Help me debug this JavaScript function...</div>
+                                <div class="session-meta">
+                                    <span class="session-time">3 days ago</span>
+                                    <span class="session-messages">8 messages</span>
+                                </div>
+                            </div>
+                            <button class="delete-session" title="Delete conversation">
+                                <i data-lucide="trash-2"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-footer">
+                    <div class="sidebar-actions">
+                        <button class="btn btn-primary btn-full" id="newSessionBtn">
+                            <i data-lucide="plus-circle"></i>
+                            New Conversation
+                        </button>
+                        <div class="action-row">
+                            <button class="btn btn-secondary" id="exportBtn">
+                                <i data-lucide="download"></i>
+                                Export
+                            </button>
+                            <button class="btn btn-secondary" id="clearAllBtn">
+                                <i data-lucide="trash-2"></i>
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="user-profile">
+                        <div class="profile-avatar">
+                            <i data-lucide="user"></i>
+                        </div>
+                        <div class="profile-info">
+                            <div class="profile-name">User</div>
+                            <div class="profile-status">Premium Plan</div>
+                        </div>
+                        <button class="btn btn-ghost btn-icon profile-menu">
+                            <i data-lucide="more-horizontal"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Enhanced Header -->
+            <header class="header">
+                <div class="header-content">
+                    <div class="header-left">
+                        <button class="btn btn-ghost btn-icon sidebar-toggle" id="sidebarToggle">
+                            <i data-lucide="menu"></i>
+                        </button>
+                        
+                        <div class="logo">
+                            <div class="logo-icon">
+                                <i data-lucide="sparkles"></i>
+                            </div>
+                            <div class="logo-text">
+                                <span class="logo-title">Curious Fellow</span>
+                                <span class="logo-subtitle">Ask me anything !</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="header-center">
+                        <button class="btn btn-secondary new-session-btn" id="headerNewSessionBtn">
+                            <i data-lucide="plus-circle"></i>
+                            Start New Session
+                        </button>
+                    </div>
+                    
+                    <div class="header-right">
+                        <div class="header-stats">
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i data-lucide="message-circle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="messageCount">42</div>
+                                    <div class="stat-label">Messages</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i data-lucide="search"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value" id="searchCount">8</div>
+                                    <div class="stat-label">Searches</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i data-lucide="zap"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value">Mistral</div>
+                                    <div class="stat-label">Model</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="connection-status">
+                            <div class="status-indicator connected" id="connectionStatus"></div>
+                            <span id="connectionText">Connected</span>
+                        </div>
+                        
+                        <div class="header-controls">
+                            <button class="btn btn-ghost btn-icon" id="settingsBtn" title="Settings">
+                                <i data-lucide="settings"></i>
+                            </button>
+                            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                                <div class="toggle-icon">
+                                    <i data-lucide="sun" class="light-icon"></i>
+                                    <i data-lucide="moon" class="dark-icon"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Chat Container -->
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Enhanced Welcome Screen -->
+                    <div class="welcome-screen" id="welcomeScreen">
+                        <div class="welcome-hero">
+                            <div class="welcome-icon">
+                                <div class="icon-glow"></div>
+                                <i data-lucide="brain-circuit"></i>
+                            </div>
+                            <h1 class="welcome-title">
+                                Hello my <span class="gradient-text">Curious Fellows!</span>
+                            </h1>
+                            <p class="welcome-subtitle">
+                                I am Maverick, your intelligent companion powered by advanced AI. Ask questions, get insights, 
+                                explore ideas, and unlock knowledge with real-time web search capabilities.
+                            </p>
+                        </div>
+                        
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i data-lucide="globe"></i>
+                                </div>
+                                <h3>Real-time Search</h3>
+                                <p>Access the latest information from across the web</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i data-lucide="brain"></i>
+                                </div>
+                                <h3>Smart Analysis</h3>
+                                <p>Get intelligent insights and detailed explanations</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i data-lucide="code"></i>
+                                </div>
+                                <h3>Code Assistant</h3>
+                                <p>Programming help, debugging, and code review</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i data-lucide="lightbulb"></i>
+                                </div>
+                                <h3>Creative Ideas</h3>
+                                <p>Brainstorm solutions and explore possibilities</p>
+                            </div>
+                        </div>
+                        
+                        <div class="suggestion-section">
+                            <h3 class="suggestion-title">Try asking me about:</h3>
+                            <div class="suggestion-chips">
+                                <div class="suggestion-chip" data-suggestion="What's the latest news from Pakistan?">
+                                    <i data-lucide="newspaper"></i>
+                                    Latest Pakistani news
+                                </div>
+                                <div class="suggestion-chip" data-suggestion="What's the weather like in Islamabad today?">
+                                    <i data-lucide="cloud-sun"></i>
+                                    Weather in Islamabad
+                                </div>
+                                <div class="suggestion-chip" data-suggestion="Explain quantum computing in simple terms">
+                                    <i data-lucide="cpu"></i>
+                                    Quantum computing
+                                </div>
+                                <div class="suggestion-chip" data-suggestion="Help me write a Python function">
+                                    <i data-lucide="code-2"></i>
+                                    Python programming
+                                </div>
+                                <div class="suggestion-chip" data-suggestion="What are the benefits of renewable energy?">
+                                    <i data-lucide="leaf"></i>
+                                    Renewable energy
+                                </div>
+                                <div class="suggestion-chip" data-suggestion="How do I start learning machine learning?">
+                                    <i data-lucide="brain-circuit"></i>
+                                    Machine learning
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Messages will be populated here -->
+                    <template id="message-template">
+                        <div class="message">
+                            <div class="message-avatar">
+                                <i data-lucide="user"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-text"></div>
+                                <div class="message-timestamp"></div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                
+                <!-- Enhanced Input Area -->
+                <div class="input-area">
+                    <div class="input-container">
+                        <div class="input-wrapper">
+                            <div class="input-actions-left">
+                                <button class="btn btn-ghost btn-icon" id="attachBtn" title="Attach file">
+                                    <i data-lucide="paperclip"></i>
+                                </button>
+                                <button class="btn btn-ghost btn-icon" id="voiceBtn" title="Voice input">
+                                    <i data-lucide="mic"></i>
+                                </button>
+                            </div>
+                            
+                            <textarea 
+                                class="message-input" 
+                                id="messageInput" 
+                                placeholder="Ask me anything... I can search the web, code, analyze, and more!"
+                                rows="1"
+                            ></textarea>
+                            
+                            <div class="input-actions-right">
+                                <div class="character-count">
+                                    <span id="charCount">0</span>/2000
+                                </div>
+                                <button class="send-button" id="sendBtn" title="Send message">
+                                    <div class="send-icon">
+                                        <i data-lucide="send"></i>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Enhanced Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i data-lucide="sparkles"></i>
+                        </div>
+                        <span>Maverick AI</span>
+                    </div>
+                    <p class="footer-description">
+                        Intelligent AI assistant powered by advanced language models 
+                        with real-time web search capabilities.
+                    </p>
+                </div>
+            </div>
+            
+            
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Connect</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link" title="Twitter">
+                        <i data-lucide="twitter"></i>
+                    </a>
+                    <a href="#" class="social-link" title="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="#" class="social-link" title="Discord">
+                        <i data-lucide="message-circle"></i>
+                    </a>
+                    <a href="#" class="social-link" title="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <div class="copyright">
+                    <span>&copy; 2024 Maverick AI. All rights reserved.</span>
+                </div>
+                <div class="footer-bottom-links">
+                    <a href="#" class="footer-bottom-link">Privacy Policy</a>
+                    <a href="#" class="footer-bottom-link">Terms of Service</a>
+                    <a href="#" class="footer-bottom-link">Cookie Policy</a>
+                </div>
+                <div class="version-info">
+                    <span class="version">v2.1.0</span>
+                    <div class="status-badge">
+                        <div class="status-dot"></div>
+                        <span>All systems operational</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+        
+        <div class="loading-spinner"> 
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            
+            <div class="loading-text">Initializing Maverick AI...</div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
